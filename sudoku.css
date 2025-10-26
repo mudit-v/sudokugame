@@ -1,0 +1,142 @@
+:root {
+	--primary-border-color: #AAA;
+	--secondary-border-color: #CCC;
+	--highlight-bg-color: rgba(100, 100, 100, 0.2);
+	--selected-bg-color: rgba(100, 100, 100, 0.2);
+	--shaded-bg-color: rgba(0, 0, 0, 0.04);
+	--main-font: 'Montserrat', sans-serif;
+	--text-color: #777;
+	--user-input-color: #1976D2;
+	--error-color: #D32F2F;
+	--button-bg: #707070;
+	--button-text-color: rgba(255, 255, 255, 0.9);
+	--button-hover-color: rgba(243, 94, 94, 1);
+}
+
+*, *:before, *:after { box-sizing: border-box; }
+
+body {
+	background-attachment: fixed;
+	background-size: contain;
+	-webkit-user-select: none;
+	user-select: none;
+	font-family: var(--main-font);
+	font-size: 12px;
+}
+
+html, body { height: 100%; }
+
+.sudoku-bk {
+	width: 100%;
+	height: 100%;
+	padding-top: 20px;
+	background:url("sudoku.png") center 0px no-repeat;
+}
+
+.sdk-game  { width: 100%; height: 100%; }
+
+/* Header, Timer, and New Game Button */
+.sudoku-header {
+	max-width: 416px;
+	margin: 0 auto 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: var(--text-color);
+	font-size: 1.5em;
+	padding: 0 5px;
+}
+
+.header-btn {
+	padding: 8px 16px;
+	font-size: 0.8em;
+	cursor: pointer;
+	border-radius: 3px;
+	border: 1px solid var(--primary-border-color);
+	background: white;
+	color: var(--button-bg);
+}
+.header-btn:hover { background: #f0f0f0; }
+
+.sdk-table {
+	max-width: 416px;
+	margin: auto;
+	display: grid;
+	grid-template-columns: repeat(9, 1fr);
+	border: var(--primary-border-color) solid 2px;
+	border-radius: 6px;
+	font-size: 2em;
+	color: var(--text-color);
+	transition: opacity 1.5s ease;
+}
+
+.sdk-col {
+	aspect-ratio: 1 / 1;
+	position: relative;
+	border-color: var(--secondary-border-color);
+	border-style: solid;
+	border-width: 0 1px 1px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.sdk-col:nth-child(3n) { border-right: var(--primary-border-color) solid 2px; }
+.sdk-col:nth-child(9n) { border-right: none; }
+.sdk-col:nth-child(n+19):nth-child(-n+27),
+.sdk-col:nth-child(n+46):nth-child(-n+54) { border-bottom: var(--primary-border-color) solid 2px; }
+.sdk-col:nth-child(n+73):nth-child(-n+81) { border-bottom: none; }
+.sdk-col:nth-child(-n+9) { border-top: var(--primary-border-color) solid 2px; }
+.sdk-col:nth-child(9n+1) { border-left: var(--primary-border-color) solid 2px; }
+
+.sdk-col.is-shaded { background-color: var(--shaded-bg-color); }
+.sdk-col.is-prefilled { color: #333; }
+.sdk-col.sdk-selected { background-color: var(--selected-bg-color) !important; }
+.sdk-col.is-highlighted { background-color: var(--highlight-bg-color); }
+
+/* Error and User Input Styling */
+.sdk-solution { text-align: center; }
+.sdk-solution.is-user-input { color: var(--user-input-color); }
+.sdk-col.has-error .sdk-solution { color: var(--error-color); font-weight: bold; animation: shake 0.4s; }
+
+@keyframes shake {
+	10%, 90% { transform: translateX(-1px); }
+	20%, 80% { transform: translateX(2px); }
+	30%, 50%, 70% { transform: translateX(-3px); }
+	40%, 60% { transform: translateX(3px); }
+}
+
+.sdk-picker {
+	max-width: 416px;
+	margin: 50px auto 20px;
+	padding: 20px;
+	background: #f9f9f9;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	transition: opacity 1.5s ease;
+}
+
+.sdk-btn {
+	display: block; width: 100%; text-align: center; padding: 12px 28px;
+	border-radius: 3px; background: var(--button-bg); color: var(--button-text-color);
+	font-size: 2em; transition: background .3s ease, color .3s ease; text-decoration: none;
+	margin-bottom: 5px; cursor: pointer;
+}
+
+.sdk-btn:hover{ color: var(--button-hover-color); }
+
+.sdk-ans-container {
+	max-width: 416px; margin: 10px auto; display: flex; justify-content: space-between;
+}
+
+.sdk-ans-container .sdk-btn { width: 10.5%; padding: 5px; margin-bottom: 0; }
+
+.sdk-no-show { opacity: 0; pointer-events: none; }
+
+@media only screen and (max-width: 480px) {
+	.sudoku-bk { padding-top: 10px; background-size: 150px; }
+	.sudoku-header { font-size: 1.2em; }
+	.sdk-table { font-size: 1.5em; }
+	.sdk-ans-container .sdk-btn { font-size: 1.2em; }
+}
